@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "maya2-mlx"
+version = "0.1.0"
+description = "Maya 2 Native (maya-research/maya2-native) text-to-speech on Apple silicon with MLX"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = [
+    "mlx>=0.31",
+    "mlx-lm>=0.31",
+    "mlx-audio>=0.6.2",        # Mimi API + the MLX ECAPA speaker encoder used for cloning
+    "tokenizers>=0.22",
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "soundfile>=0.12",
+    "huggingface_hub>=1.0",
+]
+
+[project.optional-dependencies]
+play = ["sounddevice>=0.5"]
+# ECAPA speaker embedding for the best cloning mode (icl_spk); cloning works without it in icl mode
+clone = ["torch>=2.4", "torchaudio>=2.4", "speechbrain>=1.0"]
+
+[project.scripts]
+maya2 = "maya2_mlx.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["maya2_mlx", "maya2_mlx.*"]
+
+[tool.setuptools.package-data]
+maya2_mlx = ["assets/*.json"]

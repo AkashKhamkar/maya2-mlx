@@ -1,0 +1,15 @@
+maya2-mlx
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This project runs Maya 2 Native by Maya Research (https://huggingface.co/maya-research/maya2-native).
+
+Files copied from MayaResearch/maya2-native (https://github.com/MayaResearch/maya2-native), Apache-2.0,
+see LICENSE-maya2-native:
+  maya2_mlx/text/            text normaliser (import paths adapted)
+  maya2_mlx/guards.py        generation guards
+  maya2_mlx/assets/*.json    duration priors
+The MLX model code in maya2_mlx/ is a port of the upstream inference code (tts/model, maya3/engine.py,
+maya3/prompt.py, scripts/s2_serve_controls.py).
+
+Model weights: Apache-2.0, Maya Research. Upstream components keep their own licenses:
+Qwen3-1.7B-Base (Apache-2.0), Kyutai Mimi (CC-BY-4.0), SpeechBrain ECAPA-TDNN (Apache-2.0).

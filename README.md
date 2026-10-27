@@ -146,15 +146,17 @@ eps = 1.19e-7: with the bf16 eps (2⁻⁷) the cb0 NLL rises to 1.88. Second, th
 | ta · Kayal | வணக்கம் எப்படி இருக்கிறீர்கள் இன்று வானிலை மிகவும் நன்றாக இருக்கிறது. |
 
 **Speed** on an Apple M4 (24 GB), mlx 0.31.1. One frame is 80 ms of audio; RTF below 1 means faster than real
-time. Time to first audio is about 0.15–0.25 s:
+time. Time to first audio was 0.12–0.25 s:
 
 | Precision | ms / frame | RTF |
 |---|---:|---:|
 | bf16 / fp16 | ~77 | ~0.95 |
 | 8-bit (default) | ~46 | ~0.58 |
 
-Generation is memory-bandwidth bound: each frame streams the backbone once and the depth decoder's trunks 31 times.
-Faster chips (Pro/Max) scale roughly with memory bandwidth.
+Each frame reads the backbone weights once and a depth-decoder trunk 31 times (once per level), so speed appears
+to be limited by memory bandwidth: halving the weight size (8-bit) gave a 1.67× speed-up, and compiling the depth
+decoder made no difference. Only the M4 has been measured. Chips with more memory bandwidth (Pro/Max) should be
+faster, but by how much is untested.
 
 **Other checks that were run:**
 - `tests/test_depth.py` checks the fast depth path against a literal port of `DepthV2.generate`.
@@ -175,5 +177,6 @@ Code in this repo: Apache-2.0. `maya2_mlx/text/`, `maya2_mlx/guards.py` and `may
 `LICENSE-maya2-native`). Model weights: Apache-2.0 (Maya Research). Upstream components keep their licenses:
 Qwen3-1.7B-Base (Apache-2.0), Kyutai Mimi (CC-BY-4.0), SpeechBrain ECAPA-TDNN (Apache-2.0).
 
-Maya 2 Native adds no audio watermark. Disclose synthetic speech to listeners, and do not use cloning for
-impersonation, fraud or to defeat voice authentication.
+Maya 2 Native adds no audio watermark. As the model card asks: clone only voices you own or have explicit
+permission to use, disclose synthetic speech to listeners, and do not use the model for impersonation, fraud,
+harassment or to defeat voice authentication.
